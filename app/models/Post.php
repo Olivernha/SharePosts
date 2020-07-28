@@ -39,11 +39,37 @@
     }
 
     public function getPostById($id){
-      $this->db->query('SELECT * FROM posts WHERE id = :id');
+      $this->db->query('Select * From posts where id = :id');
       $this->db->bind(':id', $id);
 
       $row = $this->db->single();
 
       return $row;
     }
+
+      public function updatePost($data){
+          $this->db->query('Update posts Set title=:title,body=:body WHERE id=:id');
+          // Bind values
+          $this->db->bind(':id', $data['id']);
+          $this->db->bind(':title', $data['title']);
+          $this->db->bind(':body', $data['body']);
+
+          // Execute
+          if($this->db->execute()){
+              return true;
+          } else {
+              return false;
+          }
+      }
+      public function deletePost($id){
+          $this->db->query('Delete  From posts WHERE id=:id');
+          $this->db->bind(':id', $id);
+
+          if($this->db->execute()){
+              return true;
+          } else {
+              return false;
+          }
+      }
+
   }
